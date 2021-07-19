@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>hello math</title>
+    <script src="https://dakc.github.io/kpad/kpad.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row question">
+            <span id="num1"></span>
+            <span id="sign"></span>
+            <span id="num2"></span>
+        </div>
+        <div class="row answer">
+            <div class="pad"></div>
+        </div>
+        <div class="row ctl-btn">
+            <button class="btn waves-effect waves-light orange clear left">Clear</button>
+            <span>No.</span><span id="status"></span>
+            <button class="btn waves-effect waves-light right next">Next</button>
+        </div>
+    </div>
+
+    <div class="break">&nbsp;</div>
+
+    <div class="container">
+        <div class="row">
+            <span id="result">check result</span>
+        </div>
+
+        <div class="row result-box"></div>
+
+        <div class="row">
+            <span id="status-total"></span>
+            <button class="btn deletedb-btn red right">Delete DB</button>
+        </div>
+    </div>
+
+    <div class="toast-box"><span id="toast">111/11</span></div>
+    <script src="index.js"></script>
+    <script src="db.js"></script>
+</body>
+
+</html>

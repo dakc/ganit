@@ -1,0 +1,69 @@
+.pad {
+    height: 50vh;
+    border: 1px dotted;
+}
+
+.question {
+    text-align: center;
+}
+
+#num1,
+#sign,
+#num2 {
+    font-weight: bold;
+    font-size: 80px;
+    margin: 0 20px;
+}
+
+.ctl-btn {
+    text-align: center;
+}
+
+hr {
+    margin: 50px 0;
+}
+
+#result {
+    text-decoration: underline;
+    font-size: 1.5rem;
+}
+
+.result-box .box {
+    border: 1px solid;
+    border-radius: 5%;
+    padding: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.result-box h1 {
+    margin: 0;
+}
+
+.result-box img {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.correct {
+    background-image: url('https://img.icons8.com/office/240/000000/checked--v2.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    opacity: 0.5;
+    background-color: rgba(133, 157, 179, 0.9);
+}
+
+.toast-box {
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    margin: 15px;
+    width: 100%;
+}
+
+#toast {
+    background-color: rgba(85, 85, 85, 0.8);
+    border-radius: 2px;
+    padding: 5px;
+    visibility: hidden;
+}
