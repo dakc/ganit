@@ -2,6 +2,9 @@ const getParams = new URLSearchParams(window.location.search);
 var kapd;
 var max = getParams.get("max") || 10; // number will show between 0 ~ max
 if (!isNumeric(max)) max = 10;
+var sign = getParams.get("type");
+if (!["plus", "minus"].includes(sign)) sign = "random";
+
 
 function isNumeric(value) {
   return /^\d{1,4}$/.test(value);
@@ -36,7 +39,7 @@ document.addEventListener("DOMContentLoaded", e => {
   // delete db
   document.querySelector(".deletedb-btn").addEventListener("click", e => {
     let pass = prompt("Enter password for Deletion?");
-    if (pass != "1234") return;
+    if (pass != "1234") return _showToast("Password is incorrect!!");
 
     cnt = 0;
     _deleteDb();
@@ -76,7 +79,7 @@ function setNewQuestion(isInit = false) {
   }
 
   document.getElementById("num1").textContent = getRandomNumber();
-  document.getElementById("sign").textContent = ["+", "-"].sample();
+  document.getElementById("sign").textContent = getCommand();
   document.getElementById("num2").textContent = getRandomNumber();
   cnt++;
   document.getElementById("status").textContent = cnt;
@@ -89,4 +92,27 @@ function setNewQuestion(isInit = false) {
  */
 function getRandomNumber() {
   return Math.floor(Math.random() * max);
+}
+
+/**
+ * 
+ * @returns sign for calculation +/-
+ */
+function getCommand() {
+  switch (sign) {
+    case "plus":
+      return "+";
+      break;
+    case "minus":
+      return "-";
+      break;
+    case "multiply":
+      return "*";
+      break;
+    case "random":
+      return ["+", "-"].sample();
+      break;
+    default:
+      break;
+  }
 }

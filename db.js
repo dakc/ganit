@@ -8,7 +8,7 @@ window._kdb = null;
 
     function initDB(result) {
         if (!window.indexedDB) {
-            console.log(`Your browser doesn't support IndexedDB`);
+            alert(`Your browser doesn't support IndexedDB`);
             return;
         }
 
@@ -21,7 +21,7 @@ window._kdb = null;
             result ? insertData(db, result) : getAllData(db);
         }
 
-        // create the Contacts object store and indexes
+        // create the DB_OBJECT object store and indexes
         // クライアントがデータベースを持っていない場合にトリガーされます
         request.onupgradeneeded = (event) => {
             // First, get the IDBDatabase instance from the event.target.result and assign it to the db variable.
@@ -29,8 +29,7 @@ window._kdb = null;
 
             // 存在しない場合はオブジェクトストアを作成する
             if (!db.objectStoreNames.contains(DB_OBJECT)) {
-                // create the Result object store 
-                // with auto-increment id
+                // create the Result object store with auto-increment id
                 db.createObjectStore(DB_OBJECT, {
                     autoIncrement: true
                 });
@@ -61,8 +60,6 @@ window._kdb = null;
                 let data = cursor.value;
                 console.log(data);
 
-                // todo
-                // add on result
                 var elm = document.querySelector(".result-box");
                 var div = document.createElement("div");
                 div.className = "box";
@@ -81,9 +78,7 @@ window._kdb = null;
                     var msg = document.querySelectorAll(".correct").length + "/" + totQuestion;
                     var pct = document.querySelectorAll(".correct").length / totQuestion * 100;
                     msg += "  (" + Math.round(pct) + "%)"
-                    document.getElementById("toast").textContent = msg;
-                    document.getElementById("toast").style.visibility = "visible";
-                    setTimeout(() => document.getElementById("toast").style.visibility = "hidden", 2000);
+                    _showToast(msg);
                     document.getElementById("status-total").textContent = msg;
                 })
 
@@ -123,20 +118,24 @@ window._kdb = null;
         };
     }
 
-
-
-
     window._deleteDb = function () {
         var req = indexedDB.deleteDatabase(DATABASE);
         req.onsuccess = function () {
-            console.log("Deleted database successfully");
+            _showToast("Deleted Successfully!");
         };
         req.onerror = function () {
-            console.log("Couldn't delete database");
+            _showToast("Couldn't delete database");
         };
         req.onblocked = function () {
-            console.log("Couldn't delete database due to the operation being blocked");
+            _showToast("Couldn't delete database due to the operation being blocked.");
         };
+    }
+
+
+    window._showToast = function (msg) {
+        document.getElementById("toast").textContent = msg;
+        document.getElementById("toast").style.visibility = "visible";
+        setTimeout(() => document.getElementById("toast").style.visibility = "hidden", 2000);
     }
 
 })();
