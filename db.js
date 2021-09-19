@@ -6,7 +6,13 @@ window._kdb = null;
 
 (function () {
 
-    function initDB(result) {
+    /***
+     * type:
+     *    1: insert
+     *    2: get all data
+     *    3: get row count
+     */
+    function initDB(result, type = 3) {
         if (!window.indexedDB) {
             alert(`Your browser doesn't support IndexedDB`);
             return;
@@ -18,7 +24,13 @@ window._kdb = null;
         request.onerror = e => console.error("Database error: ", e);
         request.onsuccess = (event) => {
             var db = event.target.result;
-            result ? insertData(db, result) : getAllData(db);
+            if (type === 1) {
+                insertData(db, result);
+            } else if (type === 2) {
+                getAllData(db);
+            } else if (type === 3) {
+                getCount(db);
+            }
         }
 
         // create the DB_OBJECT object store and indexes
@@ -37,30 +49,39 @@ window._kdb = null;
         };
     }
 
-    window._getData = () => initDB();
+    // get all the information saved in the database
+    window._getData = () => initDB(null, 2);
 
     window._savaData = function (question, answer) {
         var result = {
             q: question,
-            a: answer
+            a: answer,
+            t: new Date().getTime()
         };
 
-        initDB(result, true);
+        initDB(result, 1);
     }
 
-    function getAllData(db) {
+    async function getAllData(db) {
+        // console.log("getAllData executed")
         const txn = db.transaction(DB_OBJECT, 'readonly');
         const objectStore = txn.objectStore(DB_OBJECT);
 
         var totQuestion = 0;
+        var elm = document.querySelector(".result-box");
+        var title = document.createElement("h2");
+        elm.appendChild(title);
+
+        let t1, t2;
         objectStore.openCursor().onsuccess = (event) => {
             let cursor = event.target.result;
             if (cursor) {
                 totQuestion++;
                 let data = cursor.value;
-                console.log(data);
+                // console.log(data);
+                if (!t1) t1 = data.t;
+                t2 = data.t;
 
-                var elm = document.querySelector(".result-box");
                 var div = document.createElement("div");
                 div.className = "box";
                 var span = document.createElement("h1");
@@ -86,9 +107,11 @@ window._kdb = null;
                 cursor.continue();
             }
         };
+
         // close the database connection
         txn.oncomplete = function () {
             db.close();
+            title.textContent = `Total: ${totQuestion} Time: ${Math.round((t2 - t1)/(1000*60)) || '0'}`;
         };
 
     }
@@ -103,7 +126,8 @@ window._kdb = null;
         let query = store.put(result);
         // handle success case
         query.onsuccess = function (event) {
-            console.log(event);
+            // console.log(event);
+            // do nothing
         };
 
         // handle the error case
@@ -136,6 +160,20 @@ window._kdb = null;
         document.getElementById("toast").textContent = msg;
         document.getElementById("toast").style.visibility = "visible";
         setTimeout(() => document.getElementById("toast").style.visibility = "hidden", 2000);
+    }
+
+    // get the number of rows saved in db
+    window._getCount = () => initDB(3);
+    async function getCount(db) {
+        const txn = db.transaction(DB_OBJECT, 'readonly');
+        const objectStore = txn.objectStore(DB_OBJECT);
+        var countRequest = objectStore.count();
+        countRequest.onsuccess = function () {
+            let cnt = countRequest.result;
+            // console.log(cnt);
+            db.close();
+            window._cnt = cnt;
+        }
     }
 
 })();

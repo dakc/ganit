@@ -28,6 +28,11 @@ hr {
     font-size: 1.5rem;
 }
 
+#result:hover {
+    cursor: pointer;
+    color: blue;
+}
+
 .result-box .box {
     border: 1px solid;
     border-radius: 5%;

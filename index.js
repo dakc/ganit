@@ -10,10 +10,16 @@ function isNumeric(value) {
   return /^\d{1,4}$/.test(value);
 }
 
-var cnt = 0;
+window._cnt = 0;
 
 document.addEventListener("DOMContentLoaded", e => {
+  // initialize kpad
   initKpad();
+
+  // get the number of rows in db
+  window._getCount();
+
+  // set question
   setNewQuestion(true);
 
   // on next button click
@@ -33,7 +39,7 @@ document.addEventListener("DOMContentLoaded", e => {
     // make empty
     document.querySelector(".result-box").innerHTML = "";
     // fill data
-    _getData();
+    window._getData();
   })
 
   // delete db
@@ -41,7 +47,7 @@ document.addEventListener("DOMContentLoaded", e => {
     let pass = prompt("Enter password for Deletion?");
     if (pass != "1234") return _showToast("Password is incorrect!!");
 
-    cnt = 0;
+    window._cnt = 0;
     _deleteDb();
     location.reload();
   });
@@ -81,8 +87,10 @@ function setNewQuestion(isInit = false) {
   document.getElementById("num1").textContent = getRandomNumber();
   document.getElementById("sign").textContent = getCommand();
   document.getElementById("num2").textContent = getRandomNumber();
-  cnt++;
-  document.getElementById("status").textContent = cnt;
+  setTimeout(() => {
+    window._cnt++;
+    document.getElementById("status").textContent = window._cnt;
+  }, 100);
 }
 
 
