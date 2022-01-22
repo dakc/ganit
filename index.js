@@ -1,6 +1,6 @@
 const getParams = new URLSearchParams(window.location.search);
 var kapd;
-var max = getParams.get("max") || 10; // number will show between 0 ~ max
+var max = getParams.get("max") || 100; // number will show between 0 ~ max
 if (!isNumeric(max)) max = 10;
 var sign = getParams.get("type");
 if (!["plus", "minus"].includes(sign)) sign = "random";
@@ -51,6 +51,13 @@ document.addEventListener("DOMContentLoaded", e => {
     _deleteDb();
     location.reload();
   });
+
+  // M.updateTextFields();
+  var elems = document.querySelectorAll('.collapsible');
+  var instances = M.Collapsible.init(elems, {});
+
+  elems = document.querySelectorAll('select');
+  instances = M.FormSelect.init(elems, {});
 })
 
 Array.prototype.sample = function () {
@@ -123,4 +130,24 @@ function getCommand() {
     default:
       break;
   }
+}
+
+/**
+ * symbol(+, -) changed
+ * 
+ * @param {*} e 
+ */
+function typeChanged(e) {
+  if (e.value === "1") {
+    sign = "plus";
+  } else if (e.value === "2") {
+    sign = "minus";
+  } else {
+    sign = "random";
+  }
+  console.log("sign changed to ", sign)
+}
+
+function maxChanged(e) {
+  max = e.value;
 }

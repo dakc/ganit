@@ -43,8 +43,49 @@
     </div>
 
     <div class="toast-box"><span id="toast">111/11</span></div>
+
+    <ul class="collapsible">
+        <li>
+            <div class="collapsible-header">Settings</div>
+            <div class="collapsible-body">
+                <form class="col s12">
+                    <div class="row">
+                        <!-- <div class="input-field col s6">
+                            <input placeholder="Placeholder" id="max_number" type="number" class="validate" min="0"
+                                max="100" value="0">
+                            <label for="first_name">Minimum</label>
+                        </div> -->
+                        <div class="input-field col s6">
+                            <input placeholder="Placeholder" id="max_number" type="number" class="validate" min="1"
+                                max="100" value="100" onchange="maxChanged(this)">
+                            <label for="first_name">Maximun</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <select onchange="typeChanged(this)">
+                                <option value="" disabled selected>Choose your option</option>
+                                <option value="1">Addition(+)</option>
+                                <option value="2">Subtraction(-)</option>
+                                <option value="3" selected>Random(+,-)</option>
+                            </select>
+                            <label>Select</label>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col">※Password for deletion RESULT: <span class="badge red">1234</span></div>
+                    </div>
+                </form>
+            </div>
+        </li>
+    </ul>
+
+
+
     <script src="index.js"></script>
     <script src="db.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 
 </html>
