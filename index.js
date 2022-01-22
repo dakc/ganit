@@ -91,15 +91,19 @@ function setNewQuestion(isInit = false) {
     kpad.clear();
   }
 
-  document.getElementById("num1").textContent = getRandomNumber();
-  document.getElementById("sign").textContent = getCommand();
-  document.getElementById("num2").textContent = getRandomNumber();
+  createQuestion();
+
   setTimeout(() => {
     window._cnt++;
     document.getElementById("status").textContent = window._cnt;
   }, 100);
 }
 
+function createQuestion() {
+  document.getElementById("num1").textContent = getRandomNumber();
+  document.getElementById("sign").textContent = getCommand();
+  document.getElementById("num2").textContent = getRandomNumber();
+}
 
 /**
  * 
@@ -145,9 +149,10 @@ function typeChanged(e) {
   } else {
     sign = "random";
   }
-  console.log("sign changed to ", sign)
+  createQuestion();
 }
 
 function maxChanged(e) {
   max = e.value;
+  createQuestion();
 }
